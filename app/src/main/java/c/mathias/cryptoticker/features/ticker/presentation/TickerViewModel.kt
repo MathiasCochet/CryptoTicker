@@ -1,10 +1,13 @@
 package c.mathias.cryptoticker.features.ticker.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import c.mathias.cryptoticker.features.ticker.domain.repository.TradingPairRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,6 +30,13 @@ class TickerViewModel @Inject constructor(
                     name = "World"
                 }
             }
+        }
+    }
+
+    fun initialize() {
+        viewModelScope.launch {
+            val tickers = tradingPairRepository.getTickers(SUPPORTED_TICKERS)
+            println(tickers)
         }
     }
 
