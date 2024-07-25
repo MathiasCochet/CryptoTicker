@@ -1,4 +1,4 @@
-package c.mathias.cryptoticker.ui.theme
+package c.mathias.cryptoticker.core.ui.theme
 
 import android.app.Activity
 import android.os.Build

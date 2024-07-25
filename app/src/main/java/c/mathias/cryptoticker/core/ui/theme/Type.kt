@@ -1,4 +1,4 @@
-package c.mathias.cryptoticker.ui.theme
+package c.mathias.cryptoticker.core.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
