@@ -1,12 +1,14 @@
 package c.mathias.cryptoticker.features.ticker.data.api
 
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface BitfinexApiService {
 
-    @GET("v2/tickers")
-    fun getTickers(
-        @Query("tickers") tickers: List<String>
+    @GET("tickers")
+    suspend fun getTickers(
+        @Query("symbols") tickers: String
     ): List<List<Any?>>
 }

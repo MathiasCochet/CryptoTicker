@@ -10,7 +10,7 @@ class BitfinexRemoteDataSourceImpl @Inject constructor(
 ) : BitfinexRemoteDataSource {
     override suspend fun getTickers(tickerNames: List<String>): Iterable<TradingPair> {
         return TradingPairDtoMapper.mapTradingPairListDtoToTradingPair(
-            bitfinexApiService.getTickers(tickerNames)
+            bitfinexApiService.getTickers(tickerNames.joinToString(","))
         )
     }
 
