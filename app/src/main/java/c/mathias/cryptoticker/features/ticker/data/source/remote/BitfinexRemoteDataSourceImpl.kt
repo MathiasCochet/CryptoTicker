@@ -8,11 +8,9 @@ import javax.inject.Inject
 class BitfinexRemoteDataSourceImpl @Inject constructor(
     private val bitfinexApiService: BitfinexApiService
 ) : BitfinexRemoteDataSource {
-    override suspend fun getTickers(): Iterable<TradingPair> {
+    override suspend fun getTickers(tickerNames: List<String>): Iterable<TradingPair> {
         return TradingPairDtoMapper.mapTradingPairListDtoToTradingPair(
-            bitfinexApiService.getTickers(
-                emptyList()
-            )
+            bitfinexApiService.getTickers(tickerNames)
         )
     }
 

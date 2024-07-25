@@ -56,11 +56,12 @@ class TradingPairRepositoryTest {
             )
         )
         coEvery { connectivityService.isOnline() } returns true
-        coEvery { bitfinexRemoteDataSource.getTickers() } returns mockTradingPairs
+        coEvery { bitfinexRemoteDataSource.getTickers(any()) } returns mockTradingPairs
 
-        val result = tradingPairRepository.getTickers()
+        val result = tradingPairRepository.getTickers(emptyList())
 
         assertEquals(mockTradingPairs, result)
+        coVerify(exactly = 1) { bitfinexLocalDataSource.deleteAll() }
         coVerify(exactly = 1) { bitfinexLocalDataSource.saveTickers(mockTradingPairs) }
     }
 
@@ -84,33 +85,12 @@ class TradingPairRepositoryTest {
         coEvery { connectivityService.isOnline() } returns false
         coEvery { bitfinexLocalDataSource.getTickers() } returns mockTradingPairs
 
-        val result = tradingPairRepository.getTickers()
+        val result = tradingPairRepository.getTickers(emptyList())
 
         assertEquals(mockTradingPairs, result)
-    }
-
-    @Test
-    fun `saveTickers should delete all and save new tickers`() = runBlocking {
-        val mockTradingPairs = listOf(
-            TradingPair(
-                "tBTCUSD",
-                66510.0,
-                5.27418289,
-                66511.0,
-                6.22327768,
-                -362.0,
-                -0.00541325,
-                66511.0,
-                499.91945703,
-                67406.0,
-                65547.0
-            )
-        )
-
-        tradingPairRepository.saveTickers(mockTradingPairs)
-
-        coVerify(exactly = 1) { bitfinexLocalDataSource.deleteAll() }
-        coVerify(exactly = 1) { bitfinexLocalDataSource.saveTickers(mockTradingPairs) }
+        coVerify(exactly = 1) { bitfinexLocalDataSource.getTickers() }
+        coVerify(exactly = 0) { bitfinexLocalDataSource.deleteAll() }
+        coVerify(exactly = 0) { bitfinexLocalDataSource.saveTickers(mockTradingPairs) }
     }
 
 }
