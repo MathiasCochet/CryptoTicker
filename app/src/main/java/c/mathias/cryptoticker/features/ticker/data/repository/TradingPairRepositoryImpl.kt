@@ -13,9 +13,9 @@ class TradingPairRepositoryImpl @Inject constructor(
     private val connectivityService: ConnectivityService,
 ) : TradingPairRepository {
 
-    override suspend fun getTickers(): Iterable<TradingPair> {
+    override suspend fun getTickers(tickerNames: List<String>): Iterable<TradingPair> {
         return if (connectivityService.isOnline()) {
-            bitfinexRemoteDataSource.getTickers().also {
+            bitfinexRemoteDataSource.getTickers(tickerNames).also {
                 saveTickers(it)
             }
         } else {
@@ -23,7 +23,7 @@ class TradingPairRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveTickers(tickers: Iterable<TradingPair>) {
+    private suspend fun saveTickers(tickers: Iterable<TradingPair>) {
         bitfinexLocalDataSource.deleteAll()
         bitfinexLocalDataSource.saveTickers(tickers)
     }
