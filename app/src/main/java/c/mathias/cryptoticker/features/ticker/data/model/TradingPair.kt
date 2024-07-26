@@ -12,4 +12,20 @@ data class TradingPair(
     val volume: Double?,
     val high: Double?,
     val low: Double?
-)
+) {
+    val symbolName: String
+        get() {
+            var symbolName: String = symbol
+            if (symbolName.startsWith("t")) {
+                symbolName = symbolName.substring(1)
+            }
+            if (symbolName.endsWith("USD")) {
+                symbolName = symbolName.substring(0, symbolName.length - 3)
+            }
+            if (symbolName.contains(":")) {
+                symbolName = symbolName.split(":")[0]
+            }
+
+            return symbolName
+        }
+}

@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.room.runtime)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.kotlinx.collections.immutable)
     annotationProcessor(libs.androidx.room.compiler)
     kapt(libs.androidx.room.compiler)
     testImplementation(libs.junit)
