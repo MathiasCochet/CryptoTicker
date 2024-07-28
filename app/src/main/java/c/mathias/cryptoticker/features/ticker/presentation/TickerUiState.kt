@@ -1,23 +1,31 @@
 package c.mathias.cryptoticker.features.ticker.presentation
 
 import c.mathias.cryptoticker.features.ticker.data.model.TradingPair
+import kotlinx.collections.immutable.PersistentList
 
 data class TickerUiState(
-    val name: String,
-    val tradingPairs: List<TradingPair> = emptyList()
+    val tradingPairs: PersistentList<TradingPair>? = null,
+    val isLoading: Boolean = false,
+    val isError: Boolean = false,
+    val isOnline: Boolean = true,
+    val searchValue: String = "",
 ) {
 
-    fun build(block: Builder.() -> Unit): TickerUiState =
-        Builder(this).apply(block).build()
-
+    fun build(block: Builder.() -> Unit): TickerUiState = Builder(this).apply(block).build()
 
     class Builder(state: TickerUiState) {
-        var name: String = state.name
-        var tradingPairs: List<TradingPair> = state.tradingPairs
+        var tradingPairs: PersistentList<TradingPair>? = state.tradingPairs
+        var isLoading: Boolean = state.isLoading
+        var isError: Boolean = state.isError
+        var isOnline: Boolean = state.isOnline
+        var searchValue: String = state.searchValue
 
         fun build(): TickerUiState = TickerUiState(
-            name = name,
-            tradingPairs = tradingPairs
+            tradingPairs = tradingPairs,
+            isLoading = isLoading,
+            isError = isError,
+            isOnline = isOnline,
+            searchValue = searchValue
         )
     }
 
@@ -26,19 +34,19 @@ data class TickerUiState(
 val SUPPORTED_TICKERS = listOf(
     "tBTCUSD",
     "tETHUSD",
-    "tCHSB:USD",
+    "tGRTUSD",
     "tLTCUSD",
     "tXRPUSD",
-    "tDSHUSD",
-    "tRRTUSD",
-    "t EOSUSD",
+    "tLINK:USD",
+    "tFTMUSD",
+    "tEOSUSD",
     "tSANUSD",
     "tDATUSD",
     "tSNTUSD",
     "tDOGE:USD",
-    "tLUNA:USD",
+    "tLUNA2:USD",
     "tMATIC:USD",
-    "tNEXO :USD",
+    "tOPXUSD",
     "tOCEAN:USD",
     "tBEST:USD",
     "tAAVE:USD",

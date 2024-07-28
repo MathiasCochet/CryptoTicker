@@ -1,11 +1,14 @@
 package c.mathias.cryptoticker.core.network
 
 import android.net.ConnectivityManager
+import android.net.Network
 import android.net.NetworkCapabilities
 import javax.inject.Inject
 
 interface ConnectivityService {
     fun isOnline(): Boolean
+    fun isOnlineLivestream(isOnline: (online: Boolean) -> Unit)
+
 }
 
 class ConnectivityServiceImpl @Inject constructor(
@@ -20,5 +23,18 @@ class ConnectivityServiceImpl @Inject constructor(
                                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
                                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
                         )
+    }
+
+    override fun isOnlineLivestream(isOnline: (online: Boolean) -> Unit) {
+        connectivityManager.registerDefaultNetworkCallback(object :
+            ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                isOnline(true)
+            }
+
+            override fun onLost(network: Network) {
+                isOnline(false)
+            }
+        })
     }
 }

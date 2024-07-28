@@ -41,13 +41,13 @@ class BitfinexRemoteDataSourceTest {
                 65547.0
             )
         )
-        coEvery { bitfinexService.getTickers(emptyList()) } returns mockResponse
+        coEvery { bitfinexService.getTickers("") } returns mockResponse
 
         val result = dataSource.getTickers(emptyList())
 
         assertEquals(1, result.count())
         assertEquals("tBTCUSD", result.first().symbol)
-        coVerify(exactly = 1) { bitfinexService.getTickers(emptyList()) }
+        coVerify(exactly = 1) { bitfinexService.getTickers("") }
     }
 
 }
