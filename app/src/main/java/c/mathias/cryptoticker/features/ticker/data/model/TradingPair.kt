@@ -28,4 +28,9 @@ data class TradingPair(
 
             return symbolName
         }
+
+    val priceWentUp
+        get() = dailyChange == null || dailyChange > 0
+
+    val dailyChangePercentage = (dailyChangePerc ?: 0.0) * 100
 }
